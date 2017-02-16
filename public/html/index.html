@@ -9,7 +9,11 @@
   </head>
   <body>
     <div class="container">
-      <img class="logo" src="images/tomato!.svg" alt="Tomato!" width="75">
+      <div class="row">
+        <div class="col-xs-4 col-xs-offset-4 col-md-2 col-md-offset-5">
+          <img class="logo img-full img-responsive" src="images/tomato!.svg" alt="Tomato!">
+        </div>
+      </div>
       <div class="row">
         <div id="display" class="col-xs-8 col-xs-offset-2">
             <span class="timer" id="minutes">25</span>
@@ -19,7 +23,7 @@
       </div>
       <div class="row">
         <div class="col-xs-8 col-xs-offset-2">
-          <button class="btn btn-success btn-block">Start</button>
+          <button id="start" class="btn btn-success btn-block">Start</button>
 
         </div>
       </div>
