@@ -8,6 +8,14 @@
 }
 
 .timer {
-  font-size: 128px;
+  font-size: 118px;
   padding: 2px;
+}
+
+#start {
+  font-size: 28px;
+}
+
+#stop {
+  font-size: 12px;
 }
