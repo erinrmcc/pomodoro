@@ -1,0 +1,13 @@
+.logo {
+  margin: 20px auto;
+}
+
+#display {
+  text-align: center;
+  font-family: 'Amatic SC', cursive;
+}
+
+.timer {
+  font-size: 128px;
+  padding: 2px;
+}
