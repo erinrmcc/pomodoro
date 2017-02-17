@@ -1,3 +1,4 @@
+//refactored into a module using an object literal
 var PomodoroTimer = { //capitalized because basically this is the application, explained more in ES6
   minutesLeft: 0,
   secondsLeft: 5,
@@ -13,6 +14,7 @@ var PomodoroTimer = { //capitalized because basically this is the application, e
     this.seconds = document.querySelector('#seconds');
     this.startButton = document.querySelector('#start');
     this.pauseButton = document.querySelector('#pause');
+    this.notification = document.querySelector('#notification');
   },
   render: function(){
     this.minutes.textContent = this.pad(this.minutesLeft);
@@ -34,6 +36,7 @@ var PomodoroTimer = { //capitalized because basically this is the application, e
     if (this.secondsLeft === 0 && this.minutesLeft === 0){
       clearInterval(this.timer);
       this.timer = !this.timer; //dereference, sets back to undefined state
+      this.notification.play();
       if(this.isOnBreak){
         this.numberOfBreaks += 1;
         this.resetWorkTime(); //on break is false, resets to 25
@@ -83,6 +86,10 @@ var PomodoroTimer = { //capitalized because basically this is the application, e
 };
 
 PomodoroTimer.init();
+
+
+
+// http://www.zapsplat.com/wp-content/uploads/2015/sound-effects-one/bell_small_001.mp3
 
 //Data and Variable declarations
 // var timer;
