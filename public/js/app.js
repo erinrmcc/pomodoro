@@ -15,6 +15,7 @@ var PomodoroTimer = { //capitalized because basically this is the application, e
     this.startButton = document.querySelector('#start');
     this.pauseButton = document.querySelector('#pause');
     this.notification = document.querySelector('#notification');
+    this.resetButton = document.querySelector('#reset');
   },
   render: function(){
     this.minutes.textContent = this.pad(this.minutesLeft);
@@ -23,6 +24,7 @@ var PomodoroTimer = { //capitalized because basically this is the application, e
   addListeners: function(){  //must use this here to ensure it looks inside this object for the variable
     this.startButton.addEventListener('click', this.start.bind(this));  //the bind statement takes the meaning of 'this' from addListeners and pushes that meaning into the start function
     this.pauseButton.addEventListener('click', this.pause.bind(this));
+    this.resetButton.addEventListener('click', this.reset.bind(this));
   },
   start: function(){
     if(!this.timer) {
@@ -36,10 +38,12 @@ var PomodoroTimer = { //capitalized because basically this is the application, e
     if (this.secondsLeft === 0 && this.minutesLeft === 0){
       clearInterval(this.timer);
       this.timer = !this.timer; //dereference, sets back to undefined state
+      this.notification.currentTime = 0;
       this.notification.play();
       if(this.isOnBreak){
         this.numberOfBreaks += 1;
         this.resetWorkTime(); //on break is false, resets to 25
+        this.showIterations();
       } else {
         this.resetBreakTime(); //on break is true, resets to 5 to begin break
       }
@@ -70,23 +74,44 @@ var PomodoroTimer = { //capitalized because basically this is the application, e
         return num;
       }
   },
+  reset: function(){
+    this.timer = clearInterval(this.timer);
+    this.minutesLeft = 0;
+    this.secondsLeft = 5;
+    this.numberOfBreaks = 0;
+    this.hideTomatoes();
+    this.render();
+  },
   resetWorkTime: function(){
     this.minutesLeft = 00;
     this.secondsLeft = 05;
   },
   resetBreakTime: function(){
     if(this.numberOfBreaks < 3){
-      this.minutesLeft = 5;
+      this.secondsLeft = 3;
     } else {
-      this.minutesLeft = 15;
+      this.minutesLeft = 0;
+      this.secondsLeft = 4;
       this.numberOfBreaks = 0; //resets the Pomodoro time for next 3 interations
+      this.hideTomatoes();
     }
-    this.secondsLeft = 0;
+    // this.secondsLeft = 0;
+  },
+  showIterations: function(){
+    var selector = document.querySelector(`div[data-iteration="${this.numberOfBreaks}"]`)
+    if(this.numberOfBreaks <= 4){
+      selector.classList.remove('hide');
+    }
+  },
+  hideTomatoes: function(){
+    var images = document.querySelectorAll(`div[data-iteration]`);
+    images.forEach(function(image){
+      image.classList.add('hide');
+    });
   },
 };
 
 PomodoroTimer.init();
-
 
 
 // http://www.zapsplat.com/wp-content/uploads/2015/sound-effects-one/bell_small_001.mp3
